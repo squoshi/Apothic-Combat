@@ -57,6 +57,18 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        forRepositories(fg.repository) // Only add this if you're using ForgeGradle, otherwise remove this line
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
     maven {
         // Curios
         url "https://maven.theillusivec4.top"
@@ -107,6 +119,8 @@ dependencies {
     if(project.hasProperty('twilightFileId'))       implementation fg.deobf("curse.maven:the-twilight-forest-227639:${twilightFileId}")
     if(project.hasProperty('gatewaysVersion'))      implementation fg.deobf("dev.shadowsoffire:GatewaysToEternity:${mcVersion}-${gatewaysVersion}")
     if(project.hasProperty('attributeslibVersion')) implementation fg.deobf("dev.shadowsoffire:ApothicAttributes:${mcVersion}-${attributeslibVersion}")
+    if(project.hasProperty('apotheosisVersion')) implementation fg.deobf("dev.shadowsoffire:Apotheosis:${mcVersion}-${apotheosisVersion}")
+    if(project.hasProperty('betterCombatVersion')) implementation fg.deobf("maven.modrinth:better-combat:${betterCombatVersion}+${mcVersion}-forge")
 }
 
 mixin {
