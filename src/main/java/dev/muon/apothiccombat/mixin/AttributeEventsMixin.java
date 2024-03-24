@@ -1,13 +1,9 @@
 package dev.muon.apothiccombat.mixin;
-import dev.shadowsoffire.attributeslib.impl.AttributeEvents;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import shadows.apotheosis.core.attributeslib.impl.AttributeEvents;
 import org.spongepowered.asm.mixin.Mixin;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ElytraItem;
-import org.spongepowered.asm.mixin.Overwrite;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import dev.shadowsoffire.attributeslib.api.ALObjects;
-import dev.shadowsoffire.attributeslib.api.AttributeHelper;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 
 @Mixin(value = AttributeEvents.class, remap = false)
@@ -21,10 +17,8 @@ public abstract class AttributeEventsMixin {
      * @author muon-rw, Apothic Combat
      * @reason To ensure compatibility with Better Combat by removing the redundant entity reach attribute from all items
      */
-    @Overwrite
-    public void affixModifiers(ItemAttributeModifierEvent e) {
-        if (e.getSlotType() == EquipmentSlot.CHEST && e.getItemStack().getItem() instanceof ElytraItem && !e.getModifiers().containsKey(ALObjects.Attributes.ELYTRA_FLIGHT.get())) {
-            e.addModifier(ALObjects.Attributes.ELYTRA_FLIGHT.get(), new AttributeModifier(AttributeHelper.ELYTRA_FLIGHT_UUID, () -> "attributeslib:elytra_item_flight", 1, Operation.ADDITION));
-        }
+    @Inject(method = "affixModifiers", at = @At("HEAD"), cancellable = true)
+    public void affixModifiers(ItemAttributeModifierEvent e, CallbackInfo ci) {
+        ci.cancel();
     }
 }

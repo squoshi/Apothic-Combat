@@ -20,8 +20,8 @@ public class ApothicCombat
     private static final Logger LOGGER = LogManager.getLogger();
     @SubscribeEvent
     public void clearReachModifiers(ItemAttributeModifierEvent event) {
-        if (event.getModifiers().containsKey(ForgeMod.ENTITY_REACH.get())) {
-            event.removeAttribute(ForgeMod.ENTITY_REACH.get());
+        if (event.getModifiers().containsKey(ForgeMod.ATTACK_RANGE.get())) {
+            event.removeAttribute(ForgeMod.ATTACK_RANGE.get());
         }
     }
     public ApothicCombat()
